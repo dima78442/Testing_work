@@ -29,10 +29,6 @@ import javax.inject.Singleton;
 import io.reactivex.Observable;
 
 
-/**
- * Created by janisharali on 08/12/16.
- */
-
 @Singleton
 public class AppDbHelper implements DbHelper {
 
@@ -64,8 +60,8 @@ public class AppDbHelper implements DbHelper {
     }
 
 
-    /*@Override
-    public Observable<Boolean> isQuestionEmpty() {
+    @Override
+    public Observable<Boolean> isSavedItemsEmpty() {
         return Observable.fromCallable(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
@@ -73,38 +69,36 @@ public class AppDbHelper implements DbHelper {
             }
         });
     }
-*/
 
-   /* @Override
-    public Observable<Boolean> saveOption(final Option option) {
-        return Observable.fromCallable(new Callable<Boolean>() {
+    @Override
+    public Observable<Void> deleteItem(final ItemSaved item) {
+        return Observable.fromCallable(new Callable<Void>() {
             @Override
-            public Boolean call() throws Exception {
-                mDaoSession.getOptionDao().insertInTx(option);
-                return true;
+            public Void call() throws Exception {
+                mDaoSession.getItemSavedDao().delete(item);
+                return null;
             }
         });
     }
 
     @Override
-    public Observable<Boolean> saveQuestionList(final List<Question> questionList) {
-        return Observable.fromCallable(new Callable<Boolean>() {
+    public Observable<Void> deleteItemById(final long id) {
+        return Observable.fromCallable(new Callable<Void>() {
             @Override
-            public Boolean call() throws Exception {
-                mDaoSession.getQuestionDao().insertInTx(questionList);
-                return true;
+            public Void call() throws Exception {
+                mDaoSession.getItemSavedDao().deleteByKey(id);
+                return null;
             }
         });
     }
 
-    @Override
-    public Observable<Boolean> saveOptionList(final List<Option> optionList) {
-        return Observable.fromCallable(new Callable<Boolean>() {
+    public Observable<Long> getItemKey(final ItemSaved item){
+        return Observable.fromCallable(new Callable<Long>() {
             @Override
-            public Boolean call() throws Exception {
-                mDaoSession.getOptionDao().insertInTx(optionList);
-                return true;
+            public Long call() throws Exception {
+                return mDaoSession.getItemSavedDao().getKey(item);
             }
         });
-    }*/
+    }
+
 }

@@ -32,6 +32,14 @@ public interface DbHelper {
 
     Observable<List<ItemSaved>> getAllItems();
 
+    Observable<Void> deleteItem(ItemSaved item);
+
+    Observable<Void> deleteItemById(long id);
+
+    Observable<Boolean> isSavedItemsEmpty();
+
+    Observable<Long> getItemKey(final ItemSaved item);
+
    /* Observable<List<Question>> getAllQuestions();
 
     Observable<Boolean> isQuestionEmpty();
