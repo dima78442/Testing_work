@@ -1,25 +1,31 @@
 
 package com.dima.testing_work.ui.main.fragments.search_fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.dima.testing_work.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class Search extends Fragment {
+
+    @BindView(R.id.spinner)
+    Spinner spinner;
+    @BindView(R.id.editText)
+    EditText editText;
+    /*@BindView(R.id.button)
+    Button button;*/
 
     public Search() {
     }
@@ -27,27 +33,27 @@ public class Search extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.test,container,false);
+        View view = inflater.inflate(R.layout.test,container,false);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this,view);
         String [] name = {"1","2","3"};
-        // адаптер
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, name);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
-        // заголовок
-        spinner.setPrompt("Category");
+
         // выделяем элемент
-        final EditText editText = (EditText)view.findViewById(R.id.editText);
+        //final EditText editText = (EditText)view.findViewById(R.id.editText);
 
-        Button button = (Button)view.findViewById(R.id.button);
+        //Button button = (Button)view.findViewById(R.id.button);
 
-        button.setOnClickListener(new View.OnClickListener() {
+       /* button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage("com.dima.testing_big_dig_b");
@@ -63,13 +69,18 @@ public class Search extends Fragment {
                     startActivity(launchIntent);//null pointer check in case package name was not found
                 }
             }
-        });
+        });*/
     }
 
-    public String timeGetter(){
+   /* public String timeGetter(){
         String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         Log.d("tm","" + currentDateandTime);
         return currentDateandTime;
+    }*/
+
+    @OnClick(R.id.button)
+    public void submit(View view) {
+        Toast.makeText(getActivity(),"t",Toast.LENGTH_LONG).show();
     }
 
 }

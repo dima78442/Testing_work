@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 27
@@ -38,4 +38,17 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
     implementation "com.android.support:design:27.1.1"
+
+    implementation 'org.greenrobot:greendao:3.2.2'
+
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+    implementation 'javax.inject:javax.inject:1'
+
+    testImplementation "org.robolectric:robolectric:4.0.1"
 }
