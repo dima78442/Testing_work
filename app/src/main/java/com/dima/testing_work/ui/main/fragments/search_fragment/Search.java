@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dima.testing_work.R;
+import com.dima.testing_work.ui.untitled.ApiTest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +82,9 @@ public class Search extends Fragment {
     @OnClick(R.id.button)
     public void submit(View view) {
         Toast.makeText(getActivity(),"t",Toast.LENGTH_LONG).show();
+        ApiTest apiTest = new ApiTest();
+        apiTest.setup();
+        apiTest.action2();
     }
 
 }
