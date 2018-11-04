@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +14,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dima.testing_work.R;
-import com.dima.testing_work.data.Network.model.EtsyNetwork;
-import com.dima.testing_work.ui.main.fragments.loading_fragment.Loading;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,15 +29,14 @@ public class Search extends Fragment {
     EditText editText;
     /*@BindView(R.id.button)
     Button button;*/
-    List<String> categories;
+    ArrayList<String> categories;
 
     ArrayAdapter<String> adapter;
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        EtsyNetwork etsyNetwork = new EtsyNetwork();
-        categories =  etsyNetwork.getCategories("l6pdqjuf7hdf97h1yvzadfce");
     }
 
     public Search() {
@@ -59,12 +53,8 @@ public class Search extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
-        String [] name = {"1","2","3"};
-        List<String> categories1 = new ArrayList<>();
-        categories1.add("111111111111");
-        categories1.add("1");
-        categories1.add("2");
-
+        Bundle bundle = getArguments();
+        categories = bundle.getStringArrayList("categories");
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -116,12 +106,12 @@ public class Search extends Fragment {
 //        for (int i = 0; i < categories.size(); i++) {
 //           Log.d("Retro",categories.get(i));
 //        }
-        Fragment fragment = new Loading();
+       /* Fragment fragment = new Loading();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.search, fragment);
         fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();*/
     }
 
 

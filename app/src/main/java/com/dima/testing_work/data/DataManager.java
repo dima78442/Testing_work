@@ -29,7 +29,7 @@ public class DataManager {
         this.etsyNetwork = etsyNetwork;
     }
 
-    Call<ResponseCategory> getCategories(String api_key){
+    public Call<ResponseCategory> getCategories(String api_key){
         return etsyNetwork.getCategories(api_key);
     }
 
@@ -40,27 +40,27 @@ public class DataManager {
         return etsyNetwork.getSearchResults(includes, api_key, category, keywords, limit, offset);
     }
 
-    Observable<Long> insertItem(final ItemSaved item){
+    public Observable<Long> insertItem(final ItemSaved item){
         return appDbHelper.insertItem(item);
     }
 
-    Observable<List<ItemSaved>> getAllItems(){
+    public Observable<List<ItemSaved>> getAllItems(){
         return appDbHelper.getAllItems();
     }
 
-    Observable<Void> deleteItem(ItemSaved item){
+    public Observable<Void> deleteItem(ItemSaved item){
         return appDbHelper.deleteItem(item);
     }
 
-    Observable<Void> deleteItemById(long id){
+    public Observable<Void> deleteItemById(long id){
         return appDbHelper.deleteItemById(id);
     }
 
-    Observable<Boolean> isSavedItemsEmpty(){
+    public Observable<Boolean> isSavedItemsEmpty(){
         return appDbHelper.isSavedItemsEmpty();
     }
 
-    Observable<Long> getItemKey(final ItemSaved item){
+    public Observable<Long> getItemKey(final ItemSaved item){
         return appDbHelper.getItemKey(item);
     }
 

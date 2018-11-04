@@ -17,6 +17,7 @@ public class EtsyNetwork {
     @Inject
     EtsyAPI etsyAPI;
 
+    public static String API_KEY = "l6pdqjuf7hdf97h1yvzadfce";
     private List<String> categories;
     private RetrofitComponent retrofitComponent;
 
