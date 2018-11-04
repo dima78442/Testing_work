@@ -3,7 +3,7 @@ package com.dima.testing_work.ui.untitled;
 import android.util.Log;
 
 import com.dima.testing_work.data.Network.model.EtsyAPI;
-import com.dima.testing_work.data.Network.model.model.Category.Response;
+import com.dima.testing_work.data.Network.model.model.Category.ResponseCategory;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 
 import retrofit2.Call;
@@ -37,9 +37,9 @@ public class ApiTest {
     public void action(){
         //System.out.println("work ");
         try {
-            apiService.getCategories("l6pdqjuf7hdf97h1yvzadfce").enqueue(new Callback<Response>() {
+            apiService.getCategories("l6pdqjuf7hdf97h1yvzadfce").enqueue(new Callback<ResponseCategory>() {
                 @Override
-                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                public void onResponse(Call<ResponseCategory> call, retrofit2.Response<ResponseCategory> response) {
                     for (int i = 0; i < response.body().getResults().size(); i++) {
                         Log.d("RetroLog",""+ response.body().getResults().get(i).getCategoryName());
                     }
@@ -47,7 +47,7 @@ public class ApiTest {
                 }
 
                 @Override
-                public void onFailure(Call<Response> call, Throwable t) {
+                public void onFailure(Call<ResponseCategory> call, Throwable t) {
                     Log.d("RetroLog","fail" + t.getMessage());
                 }
 

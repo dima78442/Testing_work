@@ -6,7 +6,7 @@ import java.util.List;
 
 ;
 
-public class Response {
+public class ResponseCategory {
 
     @SerializedName("count")
     @Expose

@@ -1,9 +1,12 @@
 
 package com.dima.testing_work.ui.main.fragments.search_fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dima.testing_work.R;
-import com.dima.testing_work.ui.untitled.ApiTest;
+import com.dima.testing_work.data.Network.model.EtsyNetwork;
+import com.dima.testing_work.ui.main.fragments.loading_fragment.Loading;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +34,16 @@ public class Search extends Fragment {
     EditText editText;
     /*@BindView(R.id.button)
     Button button;*/
+    List<String> categories;
+
+    ArrayAdapter<String> adapter;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        EtsyNetwork etsyNetwork = new EtsyNetwork();
+        categories =  etsyNetwork.getCategories("l6pdqjuf7hdf97h1yvzadfce");
+    }
 
     public Search() {
     }
@@ -43,9 +60,14 @@ public class Search extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
         String [] name = {"1","2","3"};
+        List<String> categories1 = new ArrayList<>();
+        categories1.add("111111111111");
+        categories1.add("1");
+        categories1.add("2");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, name);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 
         spinner.setAdapter(adapter);
 
@@ -79,12 +101,28 @@ public class Search extends Fragment {
         return currentDateandTime;
     }*/
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
     @OnClick(R.id.button)
     public void submit(View view) {
         Toast.makeText(getActivity(),"t",Toast.LENGTH_LONG).show();
-        ApiTest apiTest = new ApiTest();
+        /*ApiTest apiTest = new ApiTest();
         apiTest.setup();
-        apiTest.action2();
+        apiTest.action2();*/
+//        for (int i = 0; i < categories.size(); i++) {
+//           Log.d("Retro",categories.get(i));
+//        }
+        Fragment fragment = new Loading();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.search, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
+
 
 }

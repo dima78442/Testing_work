@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.dima.testing_work.ui.main.fragments.loading_fragment.Loading;
 import com.dima.testing_work.ui.main.fragments.saved_fragment.Saved;
-import com.dima.testing_work.ui.main.fragments.search_fragment.Search;
 
 public class MyPagerAdapter extends FragmentPagerAdapter {
 
@@ -21,7 +21,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         if (position == 0)
         {
-            fragment = new Search();
+            fragment = new Loading();
         }
         else if (position == 1)
         {
@@ -40,7 +40,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         String title = null;
         if (position == 0)
         {
-            title = "Search";
+            title = "Loading";
         }
         else if (position == 1)
         {
