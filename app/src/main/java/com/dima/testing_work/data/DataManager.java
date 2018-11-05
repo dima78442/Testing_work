@@ -65,10 +65,10 @@ public class DataManager {
     public Observable<Long> getItemKey(final ItemSaved item){
         return appDbHelper.getItemKey(item);
     }
-    public void setImage(String url, ImageView image, Callback callback){
-        PicassoEtsy.imageDownload(url, image, callback);
+    public static void setImage(String url, ImageView image){
+        PicassoEtsy.imageDownload(url, image);
     }
-    public void  saveImageFile(String url, ImageView image, Target target){
+    public static void  saveImageFile(String url, ImageView image, Target target){
         PicassoEtsy.imageDownloadFile(url, image, target);
     }
 }

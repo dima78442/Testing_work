@@ -1,8 +1,10 @@
 package com.dima.testing_work.ui.search_result;
 
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.dima.testing_work.data.DataManager;
+import com.dima.testing_work.data.Network.model.PicassoEtsy;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 
 import java.util.List;
@@ -55,5 +57,8 @@ public class SearchResultPresenter {
             }
         });
         return responseSearch;
+    }
+    public static void setImage(String url, ImageView image){
+        PicassoEtsy.imageDownload(url, image);
     }
 }

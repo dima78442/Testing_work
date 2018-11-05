@@ -1,26 +1,25 @@
 package com.dima.testing_work.data.Network.model;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.Environment;
-import android.util.Log;
 import android.widget.ImageView;
 
-import com.dima.testing_work.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 public class PicassoEtsy {
 
-    public static void  imageDownload(String url,ImageView image, Callback callback){
-        Picasso.get().load(url).into(image,callback);
+    public static void imageDownload(String url,ImageView image){
+        Picasso.get().load(url).into(image, new Callback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
 
     }
 
@@ -28,9 +27,9 @@ public class PicassoEtsy {
         Picasso.get().load(url).into(target);
     }
 
-    //target to save
-    private Target getTarget(){
-        Target target = new Target(){
+    /*//target to save
+    private Target getTarget() {
+        Target target = new Target() {
 
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -42,7 +41,7 @@ public class PicassoEtsy {
                                 "/BIGDIG/test/B");
                         path.mkdirs();
                         File file = new File(Environment.getExternalStorageDirectory()
-                                +"/BIGDIG/test/B/2.jpg");
+                                + "/BIGDIG/test/B/2.jpg");
                         Log.d("picc", Environment.getExternalStorageDirectory().getAbsolutePath());
                         try {
                             file.createNewFile();
@@ -69,4 +68,5 @@ public class PicassoEtsy {
             }
         };
         return target;
+    }*/
 }

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.dima.testing_work.R;
 import com.dima.testing_work.data.DataManager;
@@ -32,7 +33,8 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         setContentView(R.layout.activity_serch_result);
 
         ButterKnife.bind(this);
-
+        ProgressBar progressBar = findViewById(R.id.progressBar2);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
         presenter = new SearchResultPresenter(new DataManager(null,null,new EtsyNetwork()));
         presenter.onAttach(this);
         presenter.getSearchResults("images", EtsyNetwork.API_KEY,"paper_goods","terminator",5,0);
@@ -40,7 +42,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         llm = new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(llm);
-
+        //recyclerView.setVisibility(RecyclerView.INVISIBLE);
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("1");
         arrayList.add("2");

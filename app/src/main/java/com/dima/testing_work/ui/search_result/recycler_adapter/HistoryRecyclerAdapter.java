@@ -30,7 +30,9 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
             cv = itemView.findViewById(R.id.cv);
             imageView = itemView.findViewById(R.id.imageView_result);
             text = itemView.findViewById(R.id.text_result);
+
         }
+
     }
 
     public HistoryRecyclerAdapter(ArrayList<String> data) {
@@ -58,5 +60,6 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
     public int getItemCount() {
         return dataSet.size();
     }
+
 }
 
