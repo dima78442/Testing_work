@@ -32,7 +32,7 @@ public class Loading extends Fragment implements LoadingMvpView{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
         presenter = new FragmentLoadingPresenter(new DataManager(null,null,new EtsyNetwork()));
         presenter.onAttach(this);
         presenter.getCategories(EtsyNetwork.API_KEY);
@@ -66,4 +66,12 @@ public class Loading extends Fragment implements LoadingMvpView{
         super.onDestroy();
         presenter.onDetach();
     }
+
+    /*public FragmentLoadingComponent fragmentLoadingComponent() {
+
+        return Dagger.builder()
+                .activityModule(new ActivityModule(this))
+                .applicationComponent(MyApplication.get(this).getComponent())
+                .build();
+    }*/
 }

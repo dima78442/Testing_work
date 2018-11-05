@@ -9,12 +9,10 @@ import com.dima.testing_work.MyApplication;
 import com.dima.testing_work.injection.annotation.ApplicationContext;
 import com.dima.testing_work.injection.module.ApplicationModule;
 
-import javax.inject.Singleton;
-
 import dagger.Component;
 
 
-@Singleton
+
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
 
@@ -24,6 +22,6 @@ public interface ApplicationComponent {
     Context context();
 
     Application application();
-    //DataManager dataManager();
+
 
 }

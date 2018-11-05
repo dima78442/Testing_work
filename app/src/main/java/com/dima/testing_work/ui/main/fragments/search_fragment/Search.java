@@ -2,6 +2,7 @@
 package com.dima.testing_work.ui.main.fragments.search_fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dima.testing_work.R;
+import com.dima.testing_work.ui.search_result.SearchResultActivity;
 
 import java.util.ArrayList;
 
@@ -57,7 +59,6 @@ public class Search extends Fragment {
         categories = bundle.getStringArrayList("categories");
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
 
         spinner.setAdapter(adapter);
 
@@ -112,7 +113,11 @@ public class Search extends Fragment {
         fragmentTransaction.replace(R.id.search, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();*/
+        startSearchResultActivity();
     }
 
-
+    public void startSearchResultActivity(){
+        Intent intent = new Intent(getActivity(),SearchResultActivity.class);
+        startActivity(intent);
+    }
 }

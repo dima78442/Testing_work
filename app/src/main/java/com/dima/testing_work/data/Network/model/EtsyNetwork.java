@@ -21,6 +21,7 @@ public class EtsyNetwork {
     private List<String> categories;
     private RetrofitComponent retrofitComponent;
 
+
     public EtsyNetwork() {
         retrofitComponent = DaggerRetrofitComponent.builder()
                 .retrofitModule(new RetrofitModule())

@@ -1,4 +1,4 @@
-package com.dima.testing_work.ui.untitled;
+package com.dima.testing_work.ui.search_result;
 
 import android.util.Log;
 

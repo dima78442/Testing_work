@@ -28,11 +28,11 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            cv = (CardView)itemView.findViewById(R.id.cv);
+          /*  cv = (CardView)itemView.findViewById(R.id.cv);
             url = (TextView)itemView.findViewById(R.id.url);
             time = (TextView)itemView.findViewById(R.id.time);
             id =(TextView)itemView.findViewById(R.id.id_reference);
-            status =(TextView)itemView.findViewById(R.id.status_reference);
+            status =(TextView)itemView.findViewById(R.id.status_reference);*/
         }
     }
 
@@ -44,7 +44,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                            int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.reference_card, parent, false);
+                .inflate(R.layout.result_card, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }

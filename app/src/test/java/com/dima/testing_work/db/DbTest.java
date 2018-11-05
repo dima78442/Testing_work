@@ -27,7 +27,7 @@ public class DbTest {
     @Before
     public void setup(){
 
-        dbOpenHelper = new DbOpenHelper(RuntimeEnvironment.application,"items");
+        dbOpenHelper = new DbOpenHelper(RuntimeEnvironment.application);
         appDbHelper = new AppDbHelper(dbOpenHelper);
         ShadowLog.stream = System.out;
 

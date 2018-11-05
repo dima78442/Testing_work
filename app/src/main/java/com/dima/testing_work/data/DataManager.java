@@ -7,14 +7,12 @@ import com.dima.testing_work.data.Network.model.model.Category.ResponseCategory;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 import com.dima.testing_work.data.db.AppDbHelper;
 import com.dima.testing_work.data.db.model.ItemSaved;
-import com.dima.testing_work.injection.annotation.ApplicationContext;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import retrofit2.Call;
+
 
 public class DataManager {
 
@@ -22,8 +20,8 @@ public class DataManager {
     private AppDbHelper appDbHelper;
     private EtsyNetwork etsyNetwork;
 
-    @Inject
-    public DataManager(@ApplicationContext Context mContext, AppDbHelper appDbHelper, EtsyNetwork etsyNetwork) {
+
+    public DataManager(Context mContext, AppDbHelper appDbHelper, EtsyNetwork etsyNetwork) {
         this.mContext = mContext;
         this.appDbHelper = appDbHelper;
         this.etsyNetwork = etsyNetwork;

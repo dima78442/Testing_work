@@ -19,6 +19,7 @@ public class FragmentLoadingPresenter {
     private DataManager dataManager;
     private List<String> categories;
 
+
     public FragmentLoadingPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
     }
