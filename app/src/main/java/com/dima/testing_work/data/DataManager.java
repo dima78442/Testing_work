@@ -1,12 +1,16 @@
 package com.dima.testing_work.data;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.dima.testing_work.data.Network.model.EtsyNetwork;
+import com.dima.testing_work.data.Network.model.PicassoEtsy;
 import com.dima.testing_work.data.Network.model.model.Category.ResponseCategory;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 import com.dima.testing_work.data.db.AppDbHelper;
 import com.dima.testing_work.data.db.model.ItemSaved;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -61,5 +65,10 @@ public class DataManager {
     public Observable<Long> getItemKey(final ItemSaved item){
         return appDbHelper.getItemKey(item);
     }
-
+    public void setImage(String url, ImageView image, Callback callback){
+        PicassoEtsy.imageDownload(url, image, callback);
+    }
+    public void  saveImageFile(String url, ImageView image, Target target){
+        PicassoEtsy.imageDownloadFile(url, image, target);
+    }
 }
