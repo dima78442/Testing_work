@@ -6,10 +6,12 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 public class PicassoEtsy {
 
     public static void imageDownload(String url,ImageView image){
-        Picasso.get().load(url).into(image, new Callback() {
+        Picasso.get().load(url).transform(new CropCircleTransformation()).into(image, new Callback() {
             @Override
             public void onSuccess() {
 

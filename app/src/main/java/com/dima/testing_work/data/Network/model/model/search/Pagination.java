@@ -4,7 +4,7 @@ package com.dima.testing_work.data.Network.model.model.search; ;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Pagination {
+public class Pagination implements Cloneable{
 
     @SerializedName("effective_limit")
     @Expose

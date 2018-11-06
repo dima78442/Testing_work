@@ -4,7 +4,7 @@ package com.dima.testing_work.data.Network.model.model.search; ;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Image {
+public class Image implements Cloneable {
 
     @SerializedName("listing_image_id")
     @Expose
@@ -204,5 +204,7 @@ public class Image {
     public void setFullWidth(Integer fullWidth) {
         this.fullWidth = fullWidth;
     }
+
+
 
 }

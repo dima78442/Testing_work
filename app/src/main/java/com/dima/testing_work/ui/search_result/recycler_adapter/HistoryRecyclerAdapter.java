@@ -9,13 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dima.testing_work.R;
+import com.dima.testing_work.data.Network.model.model.search.Result;
+import com.dima.testing_work.ui.search_result.SearchResultPresenter;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 
 public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder>{
 
-    private ArrayList<String> dataSet;
+    private List<Result> dataSet;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,8 +38,8 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
     }
 
-    public HistoryRecyclerAdapter(ArrayList<String> data) {
-        this.dataSet = data;
+    public HistoryRecyclerAdapter(List<Result> dataSet) {
+        this.dataSet = dataSet;
     }
 
     @Override
@@ -53,7 +56,13 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         CardView cv = holder.cv;
         ImageView imageView= holder.imageView;
         TextView text = holder.text;
-        text.setText(dataSet.get(listPosition));
+        String str = dataSet.get(listPosition).getTitle();
+        String [] parts = str.split(",|;", 2);
+        text.setText(parts[0]);
+        String url = dataSet.get(listPosition).getImages().get(0).getUrlFullxfull();
+        //Log.d("Retro",dataSet.get(listPosition).getUrl());
+        SearchResultPresenter.setImage(url,imageView);
+        //String string = ;
     }
 
     @Override

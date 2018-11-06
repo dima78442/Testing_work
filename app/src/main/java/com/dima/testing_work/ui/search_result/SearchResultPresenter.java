@@ -38,7 +38,7 @@ public class SearchResultPresenter {
         return mvpView != null;
     }
 
-    public ResponseSearch getSearchResults(
+    public void getSearchResults(
             String includes,String api_key,
             String category,String keywords,int limit,
             int offset){
@@ -47,7 +47,9 @@ public class SearchResultPresenter {
             public void onResponse(Call<ResponseSearch> call, Response<ResponseSearch> response) {
                 if(isViewAttached()){
                     responseSearch = response.body();
-                    Log.d("Retro3","work" + response.body().getResults().get(1).getTitle());
+                    Log.d("Retro3","work" + response.body().getResults().get(0).getImages().get(1).getUrlFullxfull());
+                    mvpView.results_process();
+                    mvpView.updateView();
                 }
             }
 
@@ -56,9 +58,13 @@ public class SearchResultPresenter {
                 responseSearch = null;
             }
         });
-        return responseSearch;
+
     }
     public static void setImage(String url, ImageView image){
         PicassoEtsy.imageDownload(url, image);
+    }
+
+    public ResponseSearch getResponseSearch() {
+        return responseSearch;
     }
 }

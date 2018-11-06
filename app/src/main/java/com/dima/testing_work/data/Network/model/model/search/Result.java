@@ -1,11 +1,12 @@
 
-package com.dima.testing_work.data.Network.model.model.search; ;
-
-import java.util.List;
-import com.google.gson.annotations.Expose;
+package com.dima.testing_work.data.Network.model.model.search; import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+import java.util.List;
+
+;
+
+public class Result implements Cloneable{
 
     @SerializedName("listing_id")
     @Expose

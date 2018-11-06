@@ -31,6 +31,7 @@ public class DbTest {
         appDbHelper = new AppDbHelper(dbOpenHelper);
         ShadowLog.stream = System.out;
 
+
     }
 
     @Test
