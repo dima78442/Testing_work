@@ -13,7 +13,7 @@ import com.dima.testing_work.data.Network.model.EtsyNetwork;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 import com.dima.testing_work.data.Network.model.model.search.Result;
 import com.dima.testing_work.ui.search_result.recycler_adapter.HistoryRecyclerAdapter;
-import com.dima.testing_work.ui.search_result.recycler_adapter.RecyclerOnClik.RecyclerItemClickListener;
+import com.dima.testing_work.ui.search_result.recycler_adapter.recyclerListeners.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +27,17 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
     RecyclerView recyclerView;
     @BindView(R.id.progressBar2)
     ProgressBar progressBar;
+    @BindView(R.id.progressBar3)
+    ProgressBar progressBar2;
 
     HistoryRecyclerAdapter historyRecyclerAdapter;
     SearchResultPresenter presenter;
     LinearLayoutManager llm;
     List<Result> results = new ArrayList<>();
     ResponseSearch responseSearch;
+
+    private final int PAGE_SIZE = 5;
+    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,8 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
 
         presenter = new SearchResultPresenter(new DataManager(null,null,new EtsyNetwork()));
         presenter.onAttach(this);
-        presenter.getSearchResults("Images", EtsyNetwork.API_KEY,"paper_goods","terminator",5,0);
+        presenter.getSearchResults("Images", EtsyNetwork.API_KEY,"paper_goods","terminator",PAGE_SIZE,counter);
+        counter = counter + 5;
 
         //presenter.getSearchResults("images", EtsyNetwork.API_KEY,"paper_goods","terminator",5,0);
 
@@ -54,6 +60,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         recyclerView.setLayoutManager(llm);
         historyRecyclerAdapter = new HistoryRecyclerAdapter(results);
         recyclerView.setAdapter(historyRecyclerAdapter);
+        recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView,new RecyclerItemClickListener.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
@@ -72,6 +79,31 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         arrayList.add("3");*/
     }
 
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int visibleItemCount = llm.getChildCount();
+            int totalItemCount = llm.getItemCount();
+            int firstVisibleItemPosition = llm.findFirstVisibleItemPosition();
+
+            if (!presenter.isLoading() && !presenter.isLastPage()) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount >= PAGE_SIZE) {
+                    presenter.getSearchResults("Images", EtsyNetwork.API_KEY,"paper_goods","terminator",PAGE_SIZE,counter);
+                    counter = counter + 5;
+                    progressBar2.setVisibility(ProgressBar.VISIBLE);
+                }
+            }
+        }
+    };
+
     @Override
     public void results_process(){
         responseSearch = presenter.getResponseSearch();
@@ -84,13 +116,14 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
     public void updateView() {
         recyclerView.setVisibility(RecyclerView.VISIBLE);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
+        progressBar2.setVisibility(ProgressBar.INVISIBLE);
         historyRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        historyRecyclerAdapter.notifyDataSetChanged();
+        //historyRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override

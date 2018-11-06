@@ -20,6 +20,9 @@ public class SearchResultPresenter {
     private List<String> results;
     private ResponseSearch responseSearch;
 
+    private boolean isLoading = true;
+    private boolean isLastPage= false;
+
     public SearchResultPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
     }
@@ -42,12 +45,18 @@ public class SearchResultPresenter {
             String includes,String api_key,
             String category,String keywords,int limit,
             int offset){
+        isLoading = true;
         dataManager.getSearchResults(includes, api_key, category, keywords, limit, offset).enqueue(new Callback<ResponseSearch>() {
             @Override
             public void onResponse(Call<ResponseSearch> call, Response<ResponseSearch> response) {
                 if(isViewAttached()){
                     responseSearch = response.body();
+                    isLoading = false;
                     Log.d("Retro3","work" + response.body().getResults().get(0).getImages().get(1).getUrlFullxfull());
+                    if (response.body().getPagination().getNextPage() == null) {
+                        isLastPage = true;
+
+                    }
                     mvpView.results_process();
                     mvpView.updateView();
                 }
@@ -55,6 +64,7 @@ public class SearchResultPresenter {
 
             @Override
             public void onFailure(Call<ResponseSearch> call, Throwable t) {
+                isLoading = false;
                 responseSearch = null;
             }
         });
@@ -66,5 +76,13 @@ public class SearchResultPresenter {
 
     public ResponseSearch getResponseSearch() {
         return responseSearch;
+    }
+
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public boolean isLastPage() {
+        return isLastPage;
     }
 }
