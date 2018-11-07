@@ -1,5 +1,6 @@
 package com.dima.testing_work.ui.search_result;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.dima.testing_work.data.DataManager;
 import com.dima.testing_work.data.Network.model.EtsyNetwork;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 import com.dima.testing_work.data.Network.model.model.search.Result;
+import com.dima.testing_work.ui.detail.DetailActivity;
 import com.dima.testing_work.ui.search_result.recycler_adapter.HistoryRecyclerAdapter;
 import com.dima.testing_work.ui.search_result.recycler_adapter.recyclerListeners.RecyclerItemClickListener;
 
@@ -69,6 +71,8 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(SearchResultActivity.this,"t",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(SearchResultActivity.this, DetailActivity.class);
+                startActivity(intent);
             }
 
             @Override
@@ -80,6 +84,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
             @Override
             public void onRefresh() {
                 historyRecyclerAdapter.clear();
+                historyRecyclerAdapter.notifyDataSetChanged();
                 presenter.setLastPage(false);
                 counter = 0;
                 presenter.getSearchResults("Images", EtsyNetwork.API_KEY,"paper_goods","terminator",PAGE_SIZE,counter);
@@ -102,7 +107,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
             int totalItemCount = llm.getItemCount();
             int firstVisibleItemPosition = llm.findFirstVisibleItemPosition();
 
-            if (!presenter.isLoading() && !presenter.isLastPage()) {
+            if (!presenter.isLoading() && !presenter.isLastPage() && !swipeRefreshLayout.isRefreshing()) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
                         && totalItemCount >= PAGE_SIZE) {
