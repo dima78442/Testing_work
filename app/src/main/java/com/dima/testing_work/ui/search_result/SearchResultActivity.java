@@ -1,11 +1,13 @@
 package com.dima.testing_work.ui.search_result;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.dima.testing_work.R;
 import com.dima.testing_work.data.DataManager;
@@ -29,6 +31,8 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
     ProgressBar progressBar;
     @BindView(R.id.progressBar3)
     ProgressBar progressBar2;
+    @BindView(R.id.swipe_search)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     HistoryRecyclerAdapter historyRecyclerAdapter;
     SearchResultPresenter presenter;
@@ -64,7 +68,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView,new RecyclerItemClickListener.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-
+                Toast.makeText(SearchResultActivity.this,"t",Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -72,11 +76,17 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
 
             }
         }));
-        //recyclerView.setVisibility(RecyclerView.INVISIBLE);
-        /*ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("1");
-        arrayList.add("2");
-        arrayList.add("3");*/
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                historyRecyclerAdapter.clear();
+                presenter.setLastPage(false);
+                counter = 0;
+                presenter.getSearchResults("Images", EtsyNetwork.API_KEY,"paper_goods","terminator",PAGE_SIZE,counter);
+                counter = 5;
+            }
+        });
+
     }
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -110,11 +120,13 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         //results = responseSearch.getResults();
         results.addAll(responseSearch.getResults());
 
+
     }
 
     @Override
     public void updateView() {
         recyclerView.setVisibility(RecyclerView.VISIBLE);
+        swipeRefreshLayout.setRefreshing(false);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
         progressBar2.setVisibility(ProgressBar.INVISIBLE);
         historyRecyclerAdapter.notifyDataSetChanged();

@@ -85,4 +85,8 @@ public class SearchResultPresenter {
     public boolean isLastPage() {
         return isLastPage;
     }
+
+    public void setLastPage(boolean lastPage) {
+        isLastPage = lastPage;
+    }
 }

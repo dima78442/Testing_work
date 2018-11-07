@@ -65,6 +65,10 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         //String string = ;
     }
 
+    public void clear(){
+        dataSet.removeAll(dataSet);
+    }
+
     @Override
     public int getItemCount() {
         return dataSet.size();

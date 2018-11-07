@@ -71,5 +71,8 @@ dependencies {
 
     implementation 'jp.wasabeef:picasso-transformations:2.1.0'
 
+    implementation 'com.android.support:support-v4:27.1.1'
+
+
 
 }

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.dima.testing_work.R;
 import com.dima.testing_work.ui.search_result.SearchResultActivity;
@@ -100,7 +99,6 @@ public class Search extends Fragment {
 
     @OnClick(R.id.button)
     public void submit(View view) {
-        Toast.makeText(getActivity(),"t",Toast.LENGTH_LONG).show();
         /*ApiTest apiTest = new ApiTest();
         apiTest.setup();
         apiTest.action2();*/
