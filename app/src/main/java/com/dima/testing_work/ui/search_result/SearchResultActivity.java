@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.dima.testing_work.R;
 import com.dima.testing_work.data.DataManager;
@@ -70,8 +69,12 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView,new RecyclerItemClickListener.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(SearchResultActivity.this,"t",Toast.LENGTH_LONG).show();
+                Result result = results.get(position);
                 Intent intent = new Intent(SearchResultActivity.this, DetailActivity.class);
+                intent.putExtra("description",result.getDescription());
+                intent.putExtra("title",result.getTitle());
+                intent.putExtra("price",result.getPrice());
+                intent.putExtra("url",result.getImages().get(0).getUrlFullxfull());
                 startActivity(intent);
             }
 
