@@ -53,8 +53,6 @@ public class Saved extends Fragment implements SavedMvpView {
         initPresenter();
         llm = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(llm);
-
-
         historyRecyclerAdapter = new HistoryRecyclerAdapter(items);
         recyclerView.setAdapter(historyRecyclerAdapter);
 
@@ -108,25 +106,27 @@ public class Saved extends Fragment implements SavedMvpView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-/*
-        if (item.getTitle().equals("sort1")) {
-
-            references.sort(ComparatorStatus.sort_status);
-            historyRecyclerAdapter.notifyDataSetChanged();
-
-        }else if (item.getTitle().equals("sort2")) {
-
-            references.sort(ComparatorTime.sort_time);
-            historyRecyclerAdapter.notifyDataSetChanged();
-        }*/
+        deleteChecked();
+        //updateView();
         return super.onOptionsItemSelected(item);
     }
 
-    /*@Override
+    private void deleteChecked(){
+        for (int i = items.size()-1;i!=-1;i--){
+            if (items.get(i).isChecked()) {
+                presenter.deleteItem(items.get(i));
+                items.remove(i);
+            }
+        }
+        historyRecyclerAdapter.notifyDataSetChanged();
+    }
+    @Override
     public void onResume() {
         super.onResume();
+        items.clear();
+        presenter.getAllItems();
         historyRecyclerAdapter.notifyDataSetChanged();
-    }*/
+    }
 
     @Override
     public void onDestroy() {
@@ -143,4 +143,5 @@ public class Saved extends Fragment implements SavedMvpView {
     public void updateView() {
         historyRecyclerAdapter.notifyDataSetChanged();
     }
+
 }

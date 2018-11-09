@@ -1,6 +1,5 @@
 package com.dima.testing_work.ui.main.fragments.saved_fragment;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.dima.testing_work.data.DataManager;
@@ -47,7 +46,8 @@ public class FragmentSavedPresenter {
     }
 
     public void getAllItems(){
-        dataManager.getAllItems().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<ItemSaved>>() {
+        dataManager.getAllItems().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<ItemSaved>>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -55,7 +55,7 @@ public class FragmentSavedPresenter {
 
             @Override
             public void onNext(List<ItemSaved> itemSaveds) {
-                Log.d("SavedRx",itemSaveds.get(0).getName());
+               // Log.d("SavedRx",itemSaveds.get(0).getName());
                 mvpView.setData(itemSaveds);
                 mvpView.updateView();
             }
@@ -71,6 +71,31 @@ public class FragmentSavedPresenter {
             }
         });
     }
+
+    public void deleteItem(ItemSaved item){
+        dataManager.deleteItem(item).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Void>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Void aVoid) {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
     /*public Observable<Long> insertItem(final ItemSaved item){
         return appDbHelper.insertItem(item);
     }

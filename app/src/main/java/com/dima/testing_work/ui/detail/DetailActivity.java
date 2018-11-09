@@ -29,6 +29,7 @@ public class DetailActivity extends AppCompatActivity implements DetailMvpView {
     TextView price;
     @BindView(R.id.description_detail)
     TextView description;
+
     private DetailActivityPresenter presenter;
     private ItemSaved itemSaved;
     private String title_intent;

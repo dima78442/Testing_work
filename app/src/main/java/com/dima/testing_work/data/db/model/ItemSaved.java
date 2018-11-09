@@ -4,6 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Transient;
 
 @Entity(nameInDb = "items")
 public class ItemSaved {
@@ -35,6 +36,8 @@ public class ItemSaved {
     @Generated(hash = 1673042766)
     public ItemSaved() {
     }
+    @Transient
+    private boolean checked = false;
 
     public Long getId() {
         return id;
@@ -74,5 +77,13 @@ public class ItemSaved {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

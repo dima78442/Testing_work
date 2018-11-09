@@ -1,6 +1,5 @@
 package com.dima.testing_work.ui.search_result;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.dima.testing_work.data.DataManager;
@@ -52,7 +51,6 @@ public class SearchResultPresenter {
                 if(isViewAttached()){
                     responseSearch = response.body();
                     isLoading = false;
-                    Log.d("Retro3","work" + response.body().getResults().get(0).getImages().get(1).getUrlFullxfull());
                     if (response.body().getPagination().getNextPage() == null) {
                         isLastPage = true;
 
