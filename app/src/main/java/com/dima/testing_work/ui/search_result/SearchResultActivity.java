@@ -40,6 +40,8 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
     LinearLayoutManager llm;
     List<Result> results = new ArrayList<>();
     ResponseSearch responseSearch;
+    String search_argument;
+    String category_argument;
 
     private final int PAGE_SIZE = 5;
     private int counter = 0;
@@ -50,13 +52,15 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         setContentView(R.layout.activity_serch_result);
 
         ButterKnife.bind(this);
-
+        Intent intent = getIntent();
+        search_argument = intent.getStringExtra("text_search");
+        category_argument = intent.getStringExtra("category_search");
         recyclerView.setVisibility(RecyclerView.INVISIBLE);
         progressBar.setVisibility(ProgressBar.VISIBLE);
 
         presenter = new SearchResultPresenter(new DataManager(null,null,new EtsyNetwork()));
         presenter.onAttach(this);
-        presenter.getSearchResults("Images", EtsyNetwork.API_KEY,"paper_goods","terminator",PAGE_SIZE,counter);
+        presenter.getSearchResults("Images", EtsyNetwork.API_KEY,category_argument,search_argument,PAGE_SIZE,counter);
         counter = counter + 5;
 
         //presenter.getSearchResults("images", EtsyNetwork.API_KEY,"paper_goods","terminator",5,0);
@@ -90,7 +94,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
                 historyRecyclerAdapter.notifyDataSetChanged();
                 presenter.setLastPage(false);
                 counter = 0;
-                presenter.getSearchResults("Images", EtsyNetwork.API_KEY,"paper_goods","terminator",PAGE_SIZE,counter);
+                presenter.getSearchResults("Images", EtsyNetwork.API_KEY,category_argument,search_argument,PAGE_SIZE,counter);
                 counter = 5;
             }
         });
@@ -114,7 +118,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
                         && totalItemCount >= PAGE_SIZE) {
-                    presenter.getSearchResults("Images", EtsyNetwork.API_KEY,"paper_goods","terminator",PAGE_SIZE,counter);
+                    presenter.getSearchResults("Images", EtsyNetwork.API_KEY,category_argument,search_argument,PAGE_SIZE,counter);
                     counter = counter + 5;
                     progressBar2.setVisibility(ProgressBar.VISIBLE);
                 }

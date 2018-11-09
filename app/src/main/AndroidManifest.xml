@@ -19,8 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.search_result.SearchResultActivity" />
-        <activity android:name=".ui.detail.DetailActivity"
-            android:theme="@style/DetailTheme"></activity>
+        <activity
+            android:name=".ui.detail.DetailActivity"
+            android:theme="@style/DetailTheme" />
+        <activity android:name=".ui.main.fragments.saved_fragment.detail_saved_activity.DetailSavedActivity"
+            android:theme="@style/DetailTheme"/>
     </application>
 
 </manifest>

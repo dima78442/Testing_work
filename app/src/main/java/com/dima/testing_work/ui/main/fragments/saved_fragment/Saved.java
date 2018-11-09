@@ -1,5 +1,6 @@
 package com.dima.testing_work.ui.main.fragments.saved_fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,8 +18,9 @@ import com.dima.testing_work.data.DataManager;
 import com.dima.testing_work.data.db.AppDbHelper;
 import com.dima.testing_work.data.db.DbOpenHelper;
 import com.dima.testing_work.data.db.model.ItemSaved;
-
+import com.dima.testing_work.ui.main.fragments.saved_fragment.detail_saved_activity.DetailSavedActivity;
 import com.dima.testing_work.ui.main.fragments.saved_fragment.recycler_adapter.HistoryRecyclerAdapter;
+import com.dima.testing_work.ui.search_result.recycler_adapter.recyclerListeners.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,40 +57,23 @@ public class Saved extends Fragment implements SavedMvpView {
         recyclerView.setLayoutManager(llm);
         historyRecyclerAdapter = new HistoryRecyclerAdapter(items);
         recyclerView.setAdapter(historyRecyclerAdapter);
-
-        /*recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView,new RecyclerItemClickListener.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-                view.findViewById(R.id.cv).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage("com.dima.testing_big_dig_b");
-                        if (launchIntent != null) {
-
-                            CardView cardView = (CardView)view.findViewById(R.id.cv);
-                            TextView url = view.findViewById(R.id.url);
-                            TextView id = view.findViewById(R.id.id_reference);
-                            TextView status = view.findViewById(R.id.status_reference);
-
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id",id.getText().toString());
-                            bundle.putString("from","history");
-                            bundle.putString("status",status.getText().toString());
-                            bundle.putString("url",url.getText().toString());
-                            bundle.putString("time",timeGetter());
-                            launchIntent.putExtra("Reference",bundle);
-
-                            startActivity(launchIntent);//null pointer check in case package name was not found
-                        }
-                    }
-                });
+                ItemSaved itemSaved = items.get(position);
+                Intent intent = new Intent(getActivity(), DetailSavedActivity.class);
+                intent.putExtra("description",itemSaved.getDescription());
+                intent.putExtra("title",itemSaved.getName());
+                intent.putExtra("price",itemSaved.getPrice());
+                intent.putExtra("url",itemSaved.getImg());
+                startActivity(intent);
             }
 
             @Override
             public void onLongItemClick(View view, int position) {
 
             }
-        }));*/
+        }));
     }
 
     private void initPresenter(){

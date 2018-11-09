@@ -3,7 +3,6 @@ package com.dima.testing_work.ui.detail;
 import android.widget.ImageView;
 
 import com.dima.testing_work.data.DataManager;
-import com.dima.testing_work.data.Network.model.PicassoEtsy;
 import com.dima.testing_work.data.db.model.ItemSaved;
 
 import io.reactivex.Observer;
@@ -61,7 +60,7 @@ public class DetailActivityPresenter {
 
 
     public void setImage(String url, ImageView image){
-        PicassoEtsy.imageDownload(url, image);
+        DataManager.setImage(url, image);
     }
 
     public ItemSaved itemCreator(String name,String description,String price,String img){

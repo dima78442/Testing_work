@@ -116,6 +116,8 @@ public class Search extends Fragment {
 
     public void startSearchResultActivity(){
         Intent intent = new Intent(getActivity(),SearchResultActivity.class);
+        intent.putExtra("text_search",editText.getText().toString());
+        intent.putExtra("category_search",spinner.getSelectedItem().toString());
         startActivity(intent);
     }
 }
