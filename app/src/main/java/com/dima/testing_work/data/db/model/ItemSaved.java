@@ -79,9 +79,7 @@ public class ItemSaved {
         this.img = img;
     }
 
-    public boolean isChecked() {
-        return checked;
-    }
+    public boolean isChecked() { return checked; }
 
     public void setChecked(boolean checked) {
         this.checked = checked;

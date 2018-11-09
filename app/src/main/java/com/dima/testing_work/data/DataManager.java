@@ -1,6 +1,5 @@
 package com.dima.testing_work.data;
 
-import android.content.Context;
 import android.widget.ImageView;
 
 import com.dima.testing_work.data.Network.model.EtsyNetwork;
@@ -9,7 +8,6 @@ import com.dima.testing_work.data.Network.model.model.Category.ResponseCategory;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 import com.dima.testing_work.data.db.AppDbHelper;
 import com.dima.testing_work.data.db.model.ItemSaved;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Target;
 
 import java.util.List;
@@ -20,13 +18,11 @@ import retrofit2.Call;
 
 public class DataManager {
 
-    private Context mContext;
     private AppDbHelper appDbHelper;
     private EtsyNetwork etsyNetwork;
 
 
-    public DataManager(Context mContext, AppDbHelper appDbHelper, EtsyNetwork etsyNetwork) {
-        this.mContext = mContext;
+    public DataManager(AppDbHelper appDbHelper, EtsyNetwork etsyNetwork) {
         this.appDbHelper = appDbHelper;
         this.etsyNetwork = etsyNetwork;
     }

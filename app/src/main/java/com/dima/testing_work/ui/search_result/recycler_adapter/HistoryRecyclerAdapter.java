@@ -1,6 +1,5 @@
 package com.dima.testing_work.ui.search_result.recycler_adapter;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,10 @@ import com.dima.testing_work.R;
 import com.dima.testing_work.data.Network.model.model.search.Result;
 import com.dima.testing_work.ui.search_result.SearchResultPresenter;
 
-
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder>{
@@ -22,18 +23,15 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cv;
+        @BindView(R.id.imageView_result)
         ImageView imageView;
+        @BindView(R.id.text_result)
         TextView text;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
-            cv = itemView.findViewById(R.id.cv);
-            imageView = itemView.findViewById(R.id.imageView_result);
-            text = itemView.findViewById(R.id.text_result);
-
+            ButterKnife.bind(this,itemView);
         }
 
     }
@@ -53,18 +51,21 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
-        CardView cv = holder.cv;
         ImageView imageView= holder.imageView;
         TextView text = holder.text;
-        String str = dataSet.get(listPosition).getTitle();
-        String [] parts = str.split(",|;", 2);
-        text.setText(parts[0]);
+
+        text.setText(title_format(listPosition));
+
         String url = dataSet.get(listPosition).getImages().get(0).getUrlFullxfull();
-        //Log.d("Retro",dataSet.get(listPosition).getUrl());
         SearchResultPresenter.setImage(url,imageView);
-        //String string = ;
     }
 
+    private String title_format(final int listPosition){
+        String str = dataSet.get(listPosition).getTitle();
+        String [] parts = str.split(",|;", 2);
+
+        return parts[0];
+    }
     public void clear(){
         dataSet.removeAll(dataSet);
     }

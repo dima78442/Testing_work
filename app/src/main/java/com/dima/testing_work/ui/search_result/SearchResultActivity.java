@@ -35,13 +35,13 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
     @BindView(R.id.swipe_search)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    HistoryRecyclerAdapter historyRecyclerAdapter;
-    SearchResultPresenter presenter;
-    LinearLayoutManager llm;
-    List<Result> results = new ArrayList<>();
-    ResponseSearch responseSearch;
-    String search_argument;
-    String category_argument;
+    private HistoryRecyclerAdapter historyRecyclerAdapter;
+    private SearchResultPresenter presenter;
+    private LinearLayoutManager llm;
+    private List<Result> results = new ArrayList<>();
+    private ResponseSearch responseSearch;
+    private String search_argument;
+    private String category_argument;
 
     private final int PAGE_SIZE = 5;
     private int counter = 0;
@@ -52,34 +52,21 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         setContentView(R.layout.activity_serch_result);
 
         ButterKnife.bind(this);
-        Intent intent = getIntent();
-        search_argument = intent.getStringExtra("text_search");
-        category_argument = intent.getStringExtra("category_search");
-        recyclerView.setVisibility(RecyclerView.INVISIBLE);
-        progressBar.setVisibility(ProgressBar.VISIBLE);
 
-        presenter = new SearchResultPresenter(new DataManager(null,null,new EtsyNetwork()));
-        presenter.onAttach(this);
-        presenter.getSearchResults("Images", EtsyNetwork.API_KEY,category_argument,search_argument,PAGE_SIZE,counter);
-        counter = counter + 5;
+        intentGetter();
+        start_visability_set();
+        presenterInit();
 
-        //presenter.getSearchResults("images", EtsyNetwork.API_KEY,"paper_goods","terminator",5,0);
+        historyRecyclerAdapter = new HistoryRecyclerAdapter(results);
 
         llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        historyRecyclerAdapter = new HistoryRecyclerAdapter(results);
         recyclerView.setAdapter(historyRecyclerAdapter);
         recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView,new RecyclerItemClickListener.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-                Result result = results.get(position);
-                Intent intent = new Intent(SearchResultActivity.this, DetailActivity.class);
-                intent.putExtra("description",result.getDescription());
-                intent.putExtra("title",result.getTitle());
-                intent.putExtra("price",result.getPrice());
-                intent.putExtra("url",result.getImages().get(0).getUrlFullxfull());
-                startActivity(intent);
+                toDetailActivity(position);
             }
 
             @Override
@@ -90,15 +77,54 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                historyRecyclerAdapter.clear();
-                historyRecyclerAdapter.notifyDataSetChanged();
-                presenter.setLastPage(false);
-                counter = 0;
-                presenter.getSearchResults("Images", EtsyNetwork.API_KEY,category_argument,search_argument,PAGE_SIZE,counter);
-                counter = 5;
+                refresh();
             }
         });
 
+    }
+
+    private void start_visability_set(){
+        recyclerView.setVisibility(RecyclerView.INVISIBLE);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+    }
+
+    private void refresh(){
+        historyRecyclerAdapter.clear();
+        historyRecyclerAdapter.notifyDataSetChanged();
+        presenter.setLastPage(false);
+        counter = 0;
+        presenter.getSearchResults("Images", EtsyNetwork.API_KEY,category_argument,search_argument,PAGE_SIZE,counter);
+        counter = 5;
+    }
+
+    private void toDetailActivity(final int position){
+        Result result = results.get(position);
+
+        Intent intent = new Intent(SearchResultActivity.this, DetailActivity.class);
+        intent.putExtra("description",result.getDescription());
+        intent.putExtra("title",result.getTitle());
+        intent.putExtra("price",result.getPrice());
+        intent.putExtra("url",result.getImages().get(0).getUrlFullxfull());
+
+        startActivity(intent);
+    }
+    private void presenterInit(){
+        presenter = new SearchResultPresenter(new DataManager(null,new EtsyNetwork()));
+        presenter.onAttach(this);
+        presenter.getSearchResults("Images", EtsyNetwork.API_KEY,
+                category_argument,search_argument,PAGE_SIZE,counter);
+
+        counter = counter + 5;
+    }
+    private void intentGetter(){
+        Intent intent = getIntent();
+
+        search_argument = intent.getStringExtra("text_search");
+        category_argument = intent.getStringExtra("category_search");
+
+        if(search_argument.equals("")||search_argument == null){
+            search_argument = "fffffff";
+        }
     }
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -110,6 +136,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
+
             int visibleItemCount = llm.getChildCount();
             int totalItemCount = llm.getItemCount();
             int firstVisibleItemPosition = llm.findFirstVisibleItemPosition();
@@ -129,25 +156,25 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
     @Override
     public void results_process(){
         responseSearch = presenter.getResponseSearch();
-        //results = responseSearch.getResults();
         results.addAll(responseSearch.getResults());
-
-
     }
 
     @Override
     public void updateView() {
         recyclerView.setVisibility(RecyclerView.VISIBLE);
+
         swipeRefreshLayout.setRefreshing(false);
+
         progressBar.setVisibility(ProgressBar.INVISIBLE);
         progressBar2.setVisibility(ProgressBar.INVISIBLE);
         historyRecyclerAdapter.notifyDataSetChanged();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        //historyRecyclerAdapter.notifyDataSetChanged();
+
     }
 
     @Override

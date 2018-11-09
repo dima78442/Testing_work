@@ -34,6 +34,7 @@ public class Saved extends Fragment implements SavedMvpView {
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
+
     private HistoryRecyclerAdapter historyRecyclerAdapter;
     private LinearLayoutManager llm;
     private FragmentSavedPresenter presenter;
@@ -44,7 +45,8 @@ public class Saved extends Fragment implements SavedMvpView {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.history,container,false);
     }
@@ -52,26 +54,27 @@ public class Saved extends Fragment implements SavedMvpView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ButterKnife.bind(this,view);
+
         initPresenter();
+
         llm = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(llm);
+
         historyRecyclerAdapter = new HistoryRecyclerAdapter(items);
+
+        recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(historyRecyclerAdapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView,new RecyclerItemClickListener.OnItemClickListener(){
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(),
+                recyclerView,new RecyclerItemClickListener.OnItemClickListener(){
             @Override
             public void onItemClick(View view, final int position) {
+
                 TextView textView = view.findViewById(R.id.text_saved);
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ItemSaved itemSaved = items.get(position);
-                        Intent intent = new Intent(getActivity(), DetailSavedActivity.class);
-                        intent.putExtra("description",itemSaved.getDescription());
-                        intent.putExtra("title",itemSaved.getName());
-                        intent.putExtra("price",itemSaved.getPrice());
-                        intent.putExtra("url",itemSaved.getImg());
-                        startActivity(intent);
+                        startDetailSaved(position);
                     }
                 });
             }
@@ -80,14 +83,29 @@ public class Saved extends Fragment implements SavedMvpView {
             public void onLongItemClick(View view, int position) {
 
             }
+
         }));
     }
 
     private void initPresenter(){
-        presenter = new FragmentSavedPresenter(new DataManager(getContext(),new AppDbHelper(new DbOpenHelper(getActivity().getApplicationContext())),null));
+        presenter = new FragmentSavedPresenter(new DataManager(new AppDbHelper(
+                new DbOpenHelper(getActivity().getApplicationContext())),null));
         presenter.onAttach(this);
         presenter.getAllItems();
 
+    }
+
+    private void startDetailSaved(final int position){
+        ItemSaved itemSaved = items.get(position);
+
+        Intent intent = new Intent(getActivity(), DetailSavedActivity.class);
+
+        intent.putExtra("description",itemSaved.getDescription());
+        intent.putExtra("title",itemSaved.getName());
+        intent.putExtra("price",itemSaved.getPrice());
+        intent.putExtra("url",itemSaved.getImg());
+
+        startActivity(intent);
     }
 
     @Override

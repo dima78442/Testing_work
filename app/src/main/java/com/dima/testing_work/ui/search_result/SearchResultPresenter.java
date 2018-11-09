@@ -6,8 +6,6 @@ import com.dima.testing_work.data.DataManager;
 import com.dima.testing_work.data.Network.model.PicassoEtsy;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,7 +14,6 @@ public class SearchResultPresenter {
 
     private SearchResultMvpView mvpView;
     private DataManager dataManager;
-    private List<String> results;
     private ResponseSearch responseSearch;
 
     private boolean isLoading = true;
@@ -26,11 +23,9 @@ public class SearchResultPresenter {
         this.dataManager = dataManager;
     }
 
-
     public void onAttach(SearchResultMvpView mvpView) {
         this.mvpView = mvpView;
     }
-
 
     public void onDetach() {
         mvpView = null;

@@ -27,15 +27,13 @@ public class Loading extends Fragment implements LoadingMvpView{
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    FragmentLoadingPresenter presenter;
+    private FragmentLoadingPresenter presenter;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //setHasOptionsMenu(true);
-        presenter = new FragmentLoadingPresenter(new DataManager(null,null,new EtsyNetwork()));
-        presenter.onAttach(this);
-        presenter.getCategories(EtsyNetwork.API_KEY);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        presenterInit();
         return inflater.inflate(R.layout.loading,container,false);
 
     }
@@ -50,22 +48,34 @@ public class Loading extends Fragment implements LoadingMvpView{
     @Override
     public void toSearch(List<String> categories) {
         progressBar.setVisibility(ProgressBar.INVISIBLE);
+        toSearchFragment(categories);
+
+    }
+
+    private void toSearchFragment(List<String> categories){
         Fragment fragment = new Search();
+
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("categories",new ArrayList<String>(categories));
+
         fragment.setArguments(bundle);
+
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.loading, fragment);
         fragmentTransaction.commit();
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.onDetach();
     }
 
+    private void presenterInit(){
+        presenter = new FragmentLoadingPresenter(new DataManager(null,new EtsyNetwork()));
+        presenter.onAttach(this);
+        presenter.getCategories(EtsyNetwork.API_KEY);
+    }
     /*public FragmentLoadingComponent fragmentLoadingComponent() {
 
         return Dagger.builder()

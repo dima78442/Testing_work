@@ -3,7 +3,6 @@ package com.dima.testing_work.ui.main.fragments.saved_fragment;
 import android.widget.ImageView;
 
 import com.dima.testing_work.data.DataManager;
-import com.dima.testing_work.data.Network.model.PicassoEtsy;
 import com.dima.testing_work.data.db.model.ItemSaved;
 
 import java.util.List;
@@ -26,7 +25,6 @@ public class FragmentSavedPresenter {
         this.mvpView = mvpView;
     }
 
-
     public void onDetach() {
         mvpView = null;
     }
@@ -35,14 +33,10 @@ public class FragmentSavedPresenter {
         return mvpView != null;
     }
 
-    public void setImage(String url, ImageView image){
-        PicassoEtsy.imageDownload(url, image);
-    }
+    public static void setImage(String url, ImageView image){ DataManager.setImage(url, image); }
 
     public ItemSaved itemCreator(String name, String description, String price, String img){
         return new ItemSaved(null,name,description,price,img);
-
-
     }
 
     public void getAllItems(){
@@ -55,9 +49,10 @@ public class FragmentSavedPresenter {
 
             @Override
             public void onNext(List<ItemSaved> itemSaveds) {
-               // Log.d("SavedRx",itemSaveds.get(0).getName());
-                mvpView.setData(itemSaveds);
-                mvpView.updateView();
+                if (isViewAttached()) {
+                    mvpView.setData(itemSaveds);
+                    mvpView.updateView();
+                }
             }
 
             @Override
@@ -96,33 +91,4 @@ public class FragmentSavedPresenter {
         });
     }
 
-    /*public Observable<Long> insertItem(final ItemSaved item){
-        return appDbHelper.insertItem(item);
-    }
-
-    public Observable<List<ItemSaved>> getAllItems(){
-        return appDbHelper.getAllItems();
-    }
-
-    public Observable<Void> deleteItem(ItemSaved item){
-        return appDbHelper.deleteItem(item);
-    }
-
-    public Observable<Void> deleteItemById(long id){
-        return appDbHelper.deleteItemById(id);
-    }
-
-    public Observable<Boolean> isSavedItemsEmpty(){
-        return appDbHelper.isSavedItemsEmpty();
-    }
-
-    public Observable<Long> getItemKey(final ItemSaved item){
-        return appDbHelper.getItemKey(item);
-    }
-    public static void setImage(String url, ImageView image){
-        PicassoEtsy.imageDownload(url, image);
-    }
-    public static void  saveImageFile(String url, ImageView image, Target target){
-        PicassoEtsy.imageDownloadFile(url, image, target);
-    }*/
 }

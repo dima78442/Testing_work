@@ -62,7 +62,7 @@ public class DetailSavedActivity extends AppCompatActivity implements DetailMvpV
     }
 
     private void imageSetter(){
-        DetailSavedActivityPresnter.setImage(url_intent,image);
+        DetailSavedActivityPresenter.setImage(url_intent,image);
     }
 
     @Override

@@ -34,7 +34,8 @@ public class DetailActivityPresenter {
     }
 
     public void insetItem(final ItemSaved item){
-        dataManager.insertItem(item).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Long>() {
+        dataManager.insertItem(item).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Long>() {
             @Override
             public void onSubscribe(Disposable d) {
 

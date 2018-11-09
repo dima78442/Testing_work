@@ -4,7 +4,7 @@ import android.widget.ImageView;
 
 import com.dima.testing_work.data.DataManager;
 
-public class DetailSavedActivityPresnter {
+public class DetailSavedActivityPresenter {
 
     public static void setImage(String url, ImageView image){
         DataManager.setImage(url,image);

@@ -53,7 +53,9 @@ public class DetailActivity extends AppCompatActivity implements DetailMvpView {
     }
 
     private void initPresenter(){
-        presenter = new DetailActivityPresenter(new DataManager(this,new AppDbHelper(new DbOpenHelper(getApplicationContext())),null));
+        presenter = new DetailActivityPresenter(
+                new DataManager(new AppDbHelper(
+                        new DbOpenHelper(getApplicationContext())),null));
         presenter.onAttach(this);
 
     }

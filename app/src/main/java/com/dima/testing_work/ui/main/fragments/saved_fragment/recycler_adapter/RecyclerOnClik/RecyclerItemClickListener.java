@@ -1,4 +1,4 @@
-package com.dima.testing_big_dig.View.fragments.History_fragment.recycler_adapter.RecyclerOnClik;
+package com.dima.testing_work.ui.main.fragments.saved_fragment.recycler_adapter.RecyclerOnClik;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.View;
 
 
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
+
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -18,7 +19,8 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     GestureDetector mGestureDetector;
 
-    public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
+    public RecyclerItemClickListener(Context context, final RecyclerView recyclerView,
+                                     OnItemClickListener listener) {
         mListener = listener;
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
