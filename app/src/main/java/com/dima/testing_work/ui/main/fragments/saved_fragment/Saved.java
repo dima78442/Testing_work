@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dima.testing_work.R;
 import com.dima.testing_work.data.DataManager;
@@ -59,14 +60,20 @@ public class Saved extends Fragment implements SavedMvpView {
         recyclerView.setAdapter(historyRecyclerAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView,new RecyclerItemClickListener.OnItemClickListener(){
             @Override
-            public void onItemClick(View view, int position) {
-                ItemSaved itemSaved = items.get(position);
-                Intent intent = new Intent(getActivity(), DetailSavedActivity.class);
-                intent.putExtra("description",itemSaved.getDescription());
-                intent.putExtra("title",itemSaved.getName());
-                intent.putExtra("price",itemSaved.getPrice());
-                intent.putExtra("url",itemSaved.getImg());
-                startActivity(intent);
+            public void onItemClick(View view, final int position) {
+                TextView textView = view.findViewById(R.id.text_saved);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ItemSaved itemSaved = items.get(position);
+                        Intent intent = new Intent(getActivity(), DetailSavedActivity.class);
+                        intent.putExtra("description",itemSaved.getDescription());
+                        intent.putExtra("title",itemSaved.getName());
+                        intent.putExtra("price",itemSaved.getPrice());
+                        intent.putExtra("url",itemSaved.getImg());
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
