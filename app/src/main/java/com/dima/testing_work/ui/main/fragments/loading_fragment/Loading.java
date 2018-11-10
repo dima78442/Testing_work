@@ -46,8 +46,10 @@ public class Loading extends Fragment implements LoadingMvpView{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ButterKnife.bind(this,view);
         activityComponent().inject(this);
+
         presenterInit();
 
     }
@@ -79,7 +81,6 @@ public class Loading extends Fragment implements LoadingMvpView{
     }
 
     private void presenterInit(){
-        //presenter = new FragmentLoadingPresenter(new DataManager(null,new EtsyNetwork()));
         presenter.onAttach(this);
         presenter.getCategories(EtsyNetwork.API_KEY);
     }

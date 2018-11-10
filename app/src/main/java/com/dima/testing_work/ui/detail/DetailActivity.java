@@ -46,20 +46,18 @@ public class DetailActivity extends AppCompatActivity implements DetailMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         ButterKnife.bind(this);
         activityComponent().inject(this);
+
+        noTitle();
         initPresenter();
         intentParser();
         imageSetter();
         textViewSetValueAndStyle();
-
-
     }
 
     private void initPresenter(){
-        /*presenter = new DetailActivityPresenter(
-                new DataManager(new AppDbHelper(
-                        new DbOpenHelper(getApplicationContext())),null));*/
         presenter.onAttach(this);
 
     }
@@ -111,5 +109,9 @@ public class DetailActivity extends AppCompatActivity implements DetailMvpView {
                 .activityModule(new ActivityModule(this))
                 .applicationComponent(((MyApplication)getApplication()).getComponent())
                 .build();
+    }
+
+    private void noTitle(){
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 }

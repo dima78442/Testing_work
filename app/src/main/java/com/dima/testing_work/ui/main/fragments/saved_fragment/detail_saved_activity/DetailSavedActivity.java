@@ -37,6 +37,7 @@ public class DetailSavedActivity extends AppCompatActivity implements DetailMvpV
 
         ButterKnife.bind(this);
 
+        noTitle();
         intentParser();
         imageSetter();
         textViewSetValueAndStyle();
@@ -70,5 +71,7 @@ public class DetailSavedActivity extends AppCompatActivity implements DetailMvpV
         Toast.makeText(this,text,Toast.LENGTH_LONG).show();
     }
 
-
+    private void noTitle(){
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
 }
