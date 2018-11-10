@@ -6,6 +6,8 @@ import com.dima.testing_work.data.DataManager;
 import com.dima.testing_work.data.Network.model.PicassoEtsy;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,6 +21,7 @@ public class SearchResultPresenter {
     private boolean isLoading = true;
     private boolean isLastPage= false;
 
+    @Inject
     public SearchResultPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
     }
@@ -48,7 +51,6 @@ public class SearchResultPresenter {
                     isLoading = false;
                     if (response.body().getPagination().getNextPage() == null) {
                         isLastPage = true;
-
                     }
                     mvpView.results_process();
                     mvpView.updateView();

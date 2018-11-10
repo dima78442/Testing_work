@@ -14,17 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.dima.testing_work.MyApplication;
 import com.dima.testing_work.R;
-import com.dima.testing_work.data.DataManager;
-import com.dima.testing_work.data.db.AppDbHelper;
-import com.dima.testing_work.data.db.DbOpenHelper;
 import com.dima.testing_work.data.db.model.ItemSaved;
+import com.dima.testing_work.injection.component.ActivityComponent;
+import com.dima.testing_work.injection.component.DaggerActivityComponent;
+import com.dima.testing_work.injection.module.ActivityModule;
 import com.dima.testing_work.ui.main.fragments.saved_fragment.detail_saved_activity.DetailSavedActivity;
 import com.dima.testing_work.ui.main.fragments.saved_fragment.recycler_adapter.HistoryRecyclerAdapter;
 import com.dima.testing_work.ui.search_result.recycler_adapter.recyclerListeners.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,9 +38,10 @@ public class Saved extends Fragment implements SavedMvpView {
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
 
+    @Inject
+    FragmentSavedPresenter presenter;
     private HistoryRecyclerAdapter historyRecyclerAdapter;
     private LinearLayoutManager llm;
-    private FragmentSavedPresenter presenter;
     private List<ItemSaved> items = new ArrayList<>();
 
     public Saved() {
@@ -56,6 +60,7 @@ public class Saved extends Fragment implements SavedMvpView {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this,view);
+        activityComponent().inject(this);
 
         initPresenter();
 
@@ -88,8 +93,8 @@ public class Saved extends Fragment implements SavedMvpView {
     }
 
     private void initPresenter(){
-        presenter = new FragmentSavedPresenter(new DataManager(new AppDbHelper(
-                new DbOpenHelper(getActivity().getApplicationContext())),null));
+        /*presenter = new FragmentSavedPresenter(new DataManager(new AppDbHelper(
+                new DbOpenHelper(getActivity().getApplicationContext())),null));*/
         presenter.onAttach(this);
         presenter.getAllItems();
 
@@ -152,6 +157,14 @@ public class Saved extends Fragment implements SavedMvpView {
     @Override
     public void updateView() {
         historyRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    public ActivityComponent activityComponent() {
+
+        return DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(getActivity()))
+                .applicationComponent(((MyApplication)getActivity().getApplication()).getComponent())
+                .build();
     }
 
 }

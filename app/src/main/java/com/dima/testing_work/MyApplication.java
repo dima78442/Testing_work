@@ -1,7 +1,6 @@
 package com.dima.testing_work;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.dima.testing_work.injection.component.ApplicationComponent;
 import com.dima.testing_work.injection.component.DaggerApplicationComponent;
@@ -18,10 +17,6 @@ public class MyApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         mApplicationComponent.inject(this);
-    }
-
-    public static MyApplication get(Context context) {
-        return (MyApplication) context.getApplicationContext();
     }
 
     public ApplicationComponent getComponent() {

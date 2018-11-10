@@ -32,6 +32,12 @@ public class ActivityModule {
         return mActivity;
     }
 
+    /*@Provides
+    @PerActivity
+    DetailActivityPresenter provideDetailPresenter(DetailActivityPresenter presenter){
+        return presenter;
+    }*/
+
    /* @Provides
     MyPagerAdapter providesMyPageAdapter(){
         FragmentActivity myActivity  = (FragmentActivity)mActivity;

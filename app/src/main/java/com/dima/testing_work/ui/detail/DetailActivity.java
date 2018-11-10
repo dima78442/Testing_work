@@ -9,11 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dima.testing_work.MyApplication;
 import com.dima.testing_work.R;
-import com.dima.testing_work.data.DataManager;
-import com.dima.testing_work.data.db.AppDbHelper;
-import com.dima.testing_work.data.db.DbOpenHelper;
 import com.dima.testing_work.data.db.model.ItemSaved;
+import com.dima.testing_work.injection.component.ActivityComponent;
+import com.dima.testing_work.injection.component.DaggerActivityComponent;
+import com.dima.testing_work.injection.module.ActivityModule;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +33,9 @@ public class DetailActivity extends AppCompatActivity implements DetailMvpView {
     @BindView(R.id.description_detail)
     TextView description;
 
-    private DetailActivityPresenter presenter;
+    @Inject
+    DetailActivityPresenter presenter;
+
     private ItemSaved itemSaved;
     private String title_intent;
     private String price_intent;
@@ -41,9 +46,8 @@ public class DetailActivity extends AppCompatActivity implements DetailMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
         ButterKnife.bind(this);
-
+        activityComponent().inject(this);
         initPresenter();
         intentParser();
         imageSetter();
@@ -53,9 +57,9 @@ public class DetailActivity extends AppCompatActivity implements DetailMvpView {
     }
 
     private void initPresenter(){
-        presenter = new DetailActivityPresenter(
+        /*presenter = new DetailActivityPresenter(
                 new DataManager(new AppDbHelper(
-                        new DbOpenHelper(getApplicationContext())),null));
+                        new DbOpenHelper(getApplicationContext())),null));*/
         presenter.onAttach(this);
 
     }
@@ -99,5 +103,13 @@ public class DetailActivity extends AppCompatActivity implements DetailMvpView {
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDetach();
+    }
+
+    public ActivityComponent activityComponent() {
+
+        return DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .applicationComponent(((MyApplication)getApplication()).getComponent())
+                .build();
     }
 }

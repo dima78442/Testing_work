@@ -9,6 +9,8 @@ import com.dima.testing_work.data.Network.model.model.Category.Result;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,6 +22,7 @@ public class FragmentLoadingPresenter {
     private List<String> categories;
 
 
+    @Inject
     public FragmentLoadingPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
     }

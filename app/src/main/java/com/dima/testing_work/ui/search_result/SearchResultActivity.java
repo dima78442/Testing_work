@@ -9,17 +9,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.dima.testing_work.MyApplication;
 import com.dima.testing_work.R;
-import com.dima.testing_work.data.DataManager;
 import com.dima.testing_work.data.Network.model.EtsyNetwork;
 import com.dima.testing_work.data.Network.model.model.search.ResponseSearch;
 import com.dima.testing_work.data.Network.model.model.search.Result;
+import com.dima.testing_work.injection.component.ActivityComponent;
+import com.dima.testing_work.injection.component.DaggerActivityComponent;
+import com.dima.testing_work.injection.module.ActivityModule;
 import com.dima.testing_work.ui.detail.DetailActivity;
 import com.dima.testing_work.ui.search_result.recycler_adapter.HistoryRecyclerAdapter;
 import com.dima.testing_work.ui.search_result.recycler_adapter.recyclerListeners.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +40,9 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
     @BindView(R.id.swipe_search)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @Inject
+    SearchResultPresenter presenter;
     private HistoryRecyclerAdapter historyRecyclerAdapter;
-    private SearchResultPresenter presenter;
     private LinearLayoutManager llm;
     private List<Result> results = new ArrayList<>();
     private ResponseSearch responseSearch;
@@ -52,6 +58,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
         setContentView(R.layout.activity_serch_result);
 
         ButterKnife.bind(this);
+        activityComponent().inject(this);
 
         intentGetter();
         start_visability_set();
@@ -108,14 +115,16 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
 
         startActivity(intent);
     }
+
     private void presenterInit(){
-        presenter = new SearchResultPresenter(new DataManager(null,new EtsyNetwork()));
+       // presenter = new SearchResultPresenter(new DataManager(null,new EtsyNetwork()));
         presenter.onAttach(this);
         presenter.getSearchResults("Images", EtsyNetwork.API_KEY,
                 category_argument,search_argument,PAGE_SIZE,counter);
 
         counter = counter + 5;
     }
+
     private void intentGetter(){
         Intent intent = getIntent();
 
@@ -161,6 +170,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
 
     @Override
     public void updateView() {
+
         recyclerView.setVisibility(RecyclerView.VISIBLE);
 
         swipeRefreshLayout.setRefreshing(false);
@@ -181,6 +191,14 @@ public class SearchResultActivity extends AppCompatActivity implements SearchRes
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDetach();
+    }
+
+    public ActivityComponent activityComponent() {
+
+        return DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .applicationComponent(((MyApplication)getApplication()).getComponent())
+                .build();
     }
 
 }

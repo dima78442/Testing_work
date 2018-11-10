@@ -7,6 +7,8 @@ import com.dima.testing_work.data.db.model.ItemSaved;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -17,6 +19,7 @@ public class FragmentSavedPresenter {
     private SavedMvpView mvpView;
     private DataManager dataManager;
 
+    @Inject
     public FragmentSavedPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
     }

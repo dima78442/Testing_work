@@ -5,6 +5,8 @@ import android.widget.ImageView;
 import com.dima.testing_work.data.DataManager;
 import com.dima.testing_work.data.db.model.ItemSaved;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -16,6 +18,7 @@ public class DetailActivityPresenter {
     private DataManager dataManager;
     private final String message= "Successfully added to saved";
 
+    @Inject
     public DetailActivityPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
     }
@@ -44,7 +47,7 @@ public class DetailActivityPresenter {
             @Override
             public void onNext(Long aLong) {
                 if (isViewAttached()) {
-                    mvpView.makeToast(message+ aLong);
+                    mvpView.makeToast(message);
                 }
             }
 

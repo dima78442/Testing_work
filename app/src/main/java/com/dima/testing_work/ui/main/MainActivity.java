@@ -21,21 +21,19 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     @BindView(R.id.toolbar_actionbar)
     Toolbar toolbar;
-    /*@Inject
-    MyPagerAdapter adapter;*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*ActivityComponent activityComponent = activityComponent();
-        activityComponent.inject(this);*/
+
         ButterKnife.bind(this);
 
         tabs();
         toolbar();
     }
     private void tabs (){
-        //inject
+
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
@@ -51,13 +49,5 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu,menu);
         return false;
     }
-
-   /* public ActivityComponent activityComponent() {
-
-        return DaggerActivityComponent.builder()
-                .activityModule(new ActivityModule(this))
-                .applicationComponent(MyApplication.get(this).getComponent())
-                .build();
-    }*/
 
 }

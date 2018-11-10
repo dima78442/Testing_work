@@ -22,11 +22,13 @@ import com.dima.testing_work.injection.annotation.ApplicationContext;
 
 import org.greenrobot.greendao.database.Database;
 
+import javax.inject.Inject;
 
 
 public class DbOpenHelper extends DaoMaster.OpenHelper {
 
 
+    @Inject
     public DbOpenHelper(@ApplicationContext Context context) {
         //@ApplicationContext
         //@DatabaseInfo

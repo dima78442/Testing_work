@@ -12,6 +12,8 @@ import com.squareup.picasso.Target;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import retrofit2.Call;
 
@@ -21,7 +23,7 @@ public class DataManager {
     private AppDbHelper appDbHelper;
     private EtsyNetwork etsyNetwork;
 
-
+    @Inject
     public DataManager(AppDbHelper appDbHelper, EtsyNetwork etsyNetwork) {
         this.appDbHelper = appDbHelper;
         this.etsyNetwork = etsyNetwork;

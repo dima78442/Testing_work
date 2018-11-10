@@ -70,4 +70,5 @@ public class DetailSavedActivity extends AppCompatActivity implements DetailMvpV
         Toast.makeText(this,text,Toast.LENGTH_LONG).show();
     }
 
+
 }

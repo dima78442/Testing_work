@@ -23,6 +23,8 @@ import com.dima.testing_work.data.db.model.ItemSaved;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 
@@ -31,6 +33,7 @@ public class AppDbHelper implements DbHelper {
 
     private final DaoSession mDaoSession;
 
+    @Inject
     public AppDbHelper(DbOpenHelper dbOpenHelper) {
         mDaoSession = new DaoMaster(dbOpenHelper.getWritableDb()).newSession();
     }
